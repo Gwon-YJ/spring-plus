@@ -65,7 +65,6 @@ public class TodoService {
         ));
     }
 
-    // QueryDSL 자바 기반으로 하는 커리문
     public TodoResponse getTodo(long todoId) {
         Todo todo = todoRepository.findByIdWithUser(todoId)
                 .orElseThrow(() -> new InvalidRequestException("Todo not found"));
