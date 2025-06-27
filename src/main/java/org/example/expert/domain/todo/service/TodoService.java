@@ -59,12 +59,13 @@ public class TodoService {
                 todo.getTitle(),
                 todo.getContents(),
                 todo.getWeather(),
-                new UserResponse(todo.getUser().getId(), todo.getUser().getEmail()),
+                new UserResponse(todo.getUser().getId(), todo.getUser().getEmail(),todo.getUser().getNickname()),
                 todo.getCreatedAt(),
                 todo.getModifiedAt()
         ));
     }
 
+    // QueryDSL 자바 기반으로 하는 커리문
     public TodoResponse getTodo(long todoId) {
         Todo todo = todoRepository.findByIdWithUser(todoId)
                 .orElseThrow(() -> new InvalidRequestException("Todo not found"));
@@ -76,7 +77,7 @@ public class TodoService {
                 todo.getTitle(),
                 todo.getContents(),
                 todo.getWeather(),
-                new UserResponse(user.getId(), user.getEmail()),
+                new UserResponse(user.getId(), user.getEmail(), user.getNickname()),
                 todo.getCreatedAt(),
                 todo.getModifiedAt()
         );
