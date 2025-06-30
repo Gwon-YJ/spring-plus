@@ -40,6 +40,7 @@ public class CommentService {
 
         Comment savedComment = commentRepository.save(newComment);
 
+        // 닉네임 추가
         return new CommentSaveResponse(
                 savedComment.getId(),
                 savedComment.getContents(),
@@ -50,6 +51,7 @@ public class CommentService {
     public List<CommentResponse> getComments(long todoId) {
         List<Comment> commentList = commentRepository.findByTodoIdWithUser(todoId);
 
+        // 닉네임 추가
         List<CommentResponse> dtoList = new ArrayList<>();
         for (Comment comment : commentList) {
             User user = comment.getUser();

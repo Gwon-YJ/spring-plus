@@ -23,6 +23,8 @@ public class User extends Timestamped {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
+
+    // 닉네임 추가
     public User(String email, String password, UserRole userRole, String nickname) {
         this.email = email;
         this.password = password;
@@ -30,6 +32,7 @@ public class User extends Timestamped {
         this.nickname = nickname;
     }
 
+    // 닉네임 추가
     private User(Long id, String email, UserRole userRole, String nickname) {
         this.id = id;
         this.email = email;
@@ -37,6 +40,7 @@ public class User extends Timestamped {
         this.nickname = nickname;
     }
 
+    // 닉네임 추가
     public static User fromAuthUser(AuthUser authUser) {
         return new User(authUser.getId(), authUser.getEmail(), authUser.getUserRole(), authUser.getNickname());
     }

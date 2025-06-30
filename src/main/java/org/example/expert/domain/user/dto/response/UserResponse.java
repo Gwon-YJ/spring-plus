@@ -7,8 +7,10 @@ public class UserResponse {
 
     private final Long id;
     private final String email;
+    // 닉네임 추가
     private final String nickname;
 
+    // 닉네임 추가
     public UserResponse(Long id, String email, String nickname) {
         this.id = id;
         this.email = email;

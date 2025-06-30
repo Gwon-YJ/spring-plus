@@ -35,6 +35,7 @@ public class AuthService {
 
         UserRole userRole = UserRole.of(signupRequest.getUserRole());
 
+        // 닉네임 추가
         User newUser = new User(
                 signupRequest.getEmail(),
                 encodedPassword,
@@ -43,6 +44,7 @@ public class AuthService {
         );
         User savedUser = userRepository.save(newUser);
 
+        // 닉네임 추가
         String bearerToken = jwtUtil.createToken(savedUser.getId(), savedUser.getEmail(), userRole, savedUser.getNickname());
 
         return new SignupResponse(bearerToken);
@@ -57,6 +59,7 @@ public class AuthService {
             throw new AuthException("잘못된 비밀번호입니다.");
         }
 
+        // 닉네임 추가
         String bearerToken = jwtUtil.createToken(user.getId(), user.getEmail(), user.getUserRole(), user.getNickname());
 
         return new SigninResponse(bearerToken);

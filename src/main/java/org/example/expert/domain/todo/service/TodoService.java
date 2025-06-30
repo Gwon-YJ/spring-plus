@@ -40,6 +40,7 @@ public class TodoService {
         );
         Todo savedTodo = todoRepository.save(newTodo);
 
+        // 닉네임 추가
         return new TodoSaveResponse(
                 savedTodo.getId(),
                 savedTodo.getTitle(),
@@ -54,6 +55,7 @@ public class TodoService {
 
         Page<Todo> todos = todoRepository.findAllByOrderByModifiedAtDesc(pageable);
 
+        // 닉네임 추가
         return todos.map(todo -> new TodoResponse(
                 todo.getId(),
                 todo.getTitle(),
@@ -71,6 +73,7 @@ public class TodoService {
 
         User user = todo.getUser();
 
+        // 닉네임 추가
         return new TodoResponse(
                 todo.getId(),
                 todo.getTitle(),
