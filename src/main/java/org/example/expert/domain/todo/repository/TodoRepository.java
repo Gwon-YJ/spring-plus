@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 public interface TodoRepository extends JpaRepository<Todo, Long>, TodoCustomRepository {
 
+    // Weather 관련 오류 수정
     @Query("SELECT t FROM Todo t LEFT JOIN FETCH t.user u " +
             "WHERE (:weather IS NULL OR t.weather = :weather) " +
             "AND (:start IS NULL OR t.modifiedAt >= :start) " +

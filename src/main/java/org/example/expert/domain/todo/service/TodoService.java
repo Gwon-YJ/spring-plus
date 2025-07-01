@@ -52,8 +52,8 @@ public class TodoService {
         );
     }
 
+    // Weather 오류 수정 완료
     public Page<TodoResponse> getTodos(String weather, LocalDateTime start,LocalDateTime end,int page, int size) {
-
 
         Pageable pageable = PageRequest.of(page - 1, size);
 
