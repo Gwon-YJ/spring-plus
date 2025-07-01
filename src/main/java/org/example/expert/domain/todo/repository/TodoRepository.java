@@ -9,14 +9,13 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 
-public interface TodoRepository extends JpaRepository<Todo, Long> {
+public interface TodoRepository extends JpaRepository<Todo, Long>, TodoCustomRepository {
+
     @Query("SELECT t FROM Todo t LEFT JOIN FETCH t.user u " +
             "WHERE (:weather IS NULL OR t.weather = :weather) " +
             "AND (:start IS NULL OR t.modifiedAt >= :start) " +
             "AND (:end IS NULL OR t.modifiedAt <= :end) " +
             "ORDER BY t.modifiedAt DESC")
     Page<Todo> searchTodosWithConditions(@Param("weather") String weather, @Param("start") LocalDateTime start, @Param("end") LocalDateTime end, Pageable pageable);
-
-
 
 }
