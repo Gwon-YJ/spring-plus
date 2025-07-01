@@ -52,32 +52,23 @@ public class TodoService {
         );
     }
 
-    // 과제 1-3 weather 추가
-    public Page<TodoResponse> getTodos(int page, int size, String weather, LocalDateTime startDate, LocalDateTime endDate) {
+    public Page<TodoResponse> getTodos(String weather, LocalDateTime start,LocalDateTime end,int page, int size) {
+
+
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Todo> todos;
-        if (weather == null || weather.isEmpty()) {
-            todos = todoRepository.findAllByOrderByModifiedAtDesc(pageable);
-        }else {
-            todos = todoRepository.findAllByWeather(weather, pageable);
-        }
 
-        if (startDate !=null || endDate != null) {
-            todos = todoRepository.findSchedulesBetweenDates(pageable,startDate,endDate);
-        }
+        Page<Todo> search=todoRepository.searchTodosWithConditions(weather,start,end,pageable);
 
-        // 닉네임 추가
-        return todos.map(todo -> new TodoResponse(
+        return search.map(todo -> new TodoResponse(
                 todo.getId(),
                 todo.getTitle(),
                 todo.getContents(),
                 todo.getWeather(),
-                new UserResponse(todo.getUser().getId(), todo.getUser().getEmail(), todo.getUser().getNickname()),
+                new UserResponse(todo.getUser().getId(),todo.getUser().getNickname(), todo.getUser().getEmail()),
                 todo.getCreatedAt(),
                 todo.getModifiedAt()
         ));
     }
-
     public TodoResponse getTodo(long todoId) {
         Todo todo = todoRepository.findByIdWithUser(todoId)
                 .orElseThrow(() -> new InvalidRequestException("Todo not found"));
