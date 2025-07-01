@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 
+// TodoCustomRepository 추가
 public interface TodoRepository extends JpaRepository<Todo, Long>, TodoCustomRepository {
 
     // Weather 관련 오류 수정
