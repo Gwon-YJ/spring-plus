@@ -7,6 +7,7 @@ import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.user.enums.UserRole;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -31,17 +32,10 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(
             @Nullable MethodParameter parameter,
             @Nullable ModelAndViewContainer mavContainer,
-            NativeWebRequest webRequest,
+            @Nullable NativeWebRequest webRequest,
             @Nullable WebDataBinderFactory binderFactory
     ) {
-        HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-
-        // JwtFilter 에서 set 한 userId, email, userRole, nickname 값을 가져옴
-        Long userId = (Long) request.getAttribute("userId");
-        String email = (String) request.getAttribute("email");
-        UserRole userRole = UserRole.of((String) request.getAttribute("userRole"));
-        String nickname = (String) request.getAttribute("nickname");
-
-        return new AuthUser(userId, email, userRole, nickname);
+        //SecurityContextHolder 에서 AuthUser를 가져와서 반환
+        return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }
